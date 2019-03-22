@@ -2,6 +2,7 @@ package nl.yogibear.marco;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -19,8 +20,9 @@ import java.awt.*;
 public class MainView extends VerticalLayout {
 
     private CustomerService service = CustomerService.getInstance();
-    private Grid<Customer> grid = new Grid<>(Customer.class);
+    private Grid<Customer> grid = new Grid<>();
     private TextField filterText = new TextField();
+    private CustomerForm form = new CustomerForm(this);
 
     public MainView() {
 
@@ -28,7 +30,7 @@ public class MainView extends VerticalLayout {
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.EAGER);
         filterText.addValueChangeListener(e -> updateList());
-        grid.setColumns("firstName","lastName","status");
+  //      grid.setColumns("firstName","lastName","status");
 
 //        add(filterText, grid);
 
@@ -36,7 +38,11 @@ public class MainView extends VerticalLayout {
         grid.addColumn(Customer::getLastName).setHeader("Last Name");
         grid.addColumn(Customer::getStatus).setHeader("Status");
 
-        add(filterText, grid);
+        HorizontalLayout mainContent = new HorizontalLayout(grid, form);
+        mainContent.setSizeFull();
+        grid.setSizeFull();
+
+        add(filterText, mainContent);
 
         setSizeFull();
 
