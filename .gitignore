@@ -1,0 +1,12 @@
+.settings/
+.classpath
+.project
+*.iml
+target/
+target
+.idea/
+bin
+MANIFEST.MF
+*.PRD.csv
+.attach*
+compiler.xml
