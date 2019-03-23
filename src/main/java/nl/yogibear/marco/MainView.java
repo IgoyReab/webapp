@@ -22,6 +22,8 @@ public class MainView extends VerticalLayout {
     private CustomerService service = CustomerService.getInstance();
     private Grid<Customer> grid = new Grid<>();
     private TextField filterText = new TextField();
+
+    // add the costomerForm to the main view
     private CustomerForm form = new CustomerForm(this);
 
     public MainView() {
@@ -38,18 +40,33 @@ public class MainView extends VerticalLayout {
         grid.addColumn(Customer::getLastName).setHeader("Last Name");
         grid.addColumn(Customer::getStatus).setHeader("Status");
 
+        // add the grid and the costumerForm to the horizontalLayout
         HorizontalLayout mainContent = new HorizontalLayout(grid, form);
         mainContent.setSizeFull();
         grid.setSizeFull();
 
+        // add the filter and the costumerForm to the mainView
         add(filterText, mainContent);
 
         setSizeFull();
 
         updateList();
-//        Button button = new Button("Click me",
-//                event -> Notification.show("Clicked!"));
-//        add(button);
+
+        // Initially, when no customer is selected in the grid, the form should be hidden
+        form.setCustomer(null);
+
+        // Detects when a user selects or deselects a row on the grid.
+        // This is a value change listener :
+        // addValueChangeListener adds a listener to the Grid. The Grid component supports
+        // multi and single-selection modes. This example uses the single-select mode through
+        // the asSingleSelect() method.
+        // setCustomer sets the selected customer in the CustomerForm. This line also uses
+        // the single-select mode.
+        // The getValue() method returns the Customer in the selected row or null if there’s
+        // no selection, effectively showing or hiding the form accordingly.
+
+        grid.asSingleSelect().addValueChangeListener(event ->
+                form.setCustomer(grid.asSingleSelect().getValue()));
     }
 
     public void updateList() {
