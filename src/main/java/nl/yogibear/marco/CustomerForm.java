@@ -28,6 +28,7 @@ public class CustomerForm extends FormLayout {  // To make this class a UI compo
 
     private Button save = new Button("Save");
     private Button delete = new Button("Delete");
+    private Button cancel = new Button ("Cancel");
 
 
     // the binder to bind the form to the customer data
@@ -53,7 +54,7 @@ public class CustomerForm extends FormLayout {  // To make this class a UI compo
         status.setItems(CustomerStatus.values());
 
         // adds the buttons
-        HorizontalLayout buttons = new HorizontalLayout(save, delete);
+        HorizontalLayout buttons = new HorizontalLayout(save, delete, cancel);
 
         // makes the save button prominent
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
@@ -78,6 +79,9 @@ public class CustomerForm extends FormLayout {  // To make this class a UI compo
 
         // implements the delete action
         delete.addClickListener(event -> delete());
+
+        // implements the cancel
+        cancel.addClickListener(event -> cancel());
     }
 
     // implemntation of the save action
@@ -106,6 +110,12 @@ public class CustomerForm extends FormLayout {  // To make this class a UI compo
         // update the list of customers
         mainView.updateList();
 
+        // hide the form
+        setCustomer(null);
+    }
+
+    // implementation of the cancel action
+    private void cancel() {
         // hide the form
         setCustomer(null);
     }

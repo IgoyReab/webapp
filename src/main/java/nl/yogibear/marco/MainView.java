@@ -32,9 +32,20 @@ public class MainView extends VerticalLayout {
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.EAGER);
         filterText.addValueChangeListener(e -> updateList());
-  //      grid.setColumns("firstName","lastName","status");
 
-//        add(filterText, grid);
+        // adds a button with a click listener
+
+        Button addCustomerBtn = new Button("Add new customer");
+        addCustomerBtn.addClickListener(e -> {
+            // clears a possible pervious selection from the grid
+            grid.asSingleSelect().clear();
+            // instantiates a new customer and passes it to customerForm form for editing
+            form.setCustomer(new Customer());
+        });
+
+        // Positions the button besides the filtertext component.
+        HorizontalLayout toolbar = new HorizontalLayout(filterText, addCustomerBtn);
+
 
         grid.addColumn(Customer::getFirstName).setHeader("First Name");
         grid.addColumn(Customer::getLastName).setHeader("Last Name");
@@ -45,8 +56,8 @@ public class MainView extends VerticalLayout {
         mainContent.setSizeFull();
         grid.setSizeFull();
 
-        // add the filter and the costumerForm to the mainView
-        add(filterText, mainContent);
+        // add the toolbar and the costumerForm to the mainView
+        add(toolbar, mainContent);
 
         setSizeFull();
 
